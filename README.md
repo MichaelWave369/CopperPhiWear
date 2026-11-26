@@ -49,3 +49,6 @@ Load saved hybrid compositions directly in ΦFabrication, retaining original sca
 
 ## ΦJunction
 Inspect detached swatch topology with explicit coincident endpoint bonds and ideal DC analysis. See `docs/junction.md`. No implicit electrical connections or on-body measurements.
+
+## ΦEvidence
+Compare explicitly paired detached swatches with documented matching criteria, retained exclusions and descriptive contrasts. See `docs/evidence.md`. No causal or health inference.
