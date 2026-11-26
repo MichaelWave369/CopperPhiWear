@@ -1,7 +1,7 @@
 import {readVault,appendSnapshot,newRecord,locked} from "./vault.mjs";
 export function mountVault({kind,read,load}){
  const section=document.createElement("section"),h=document.createElement("h2"),name=document.createElement("input"),save=document.createElement("button"),select=document.createElement("select"),restore=document.createElement("button"),refresh=document.createElement("button"),status=document.createElement("p"),link=document.createElement("a");
- h.textContent="ΦVault local snapshots";name.placeholder="Snapshot name";name.maxLength=100;name.setAttribute("aria-label","Snapshot name");select.setAttribute("aria-label","Saved snapshot");status.setAttribute("role","status");
+ h.textContent="ΦVault local snapshots · "+kind;name.placeholder="Snapshot name";name.maxLength=100;name.setAttribute("aria-label","Snapshot name");select.setAttribute("aria-label","Saved snapshot");status.setAttribute("role","status");
  for(const [b,t] of [[save,"Save new snapshot"],[restore,"Load selected snapshot"],[refresh,"Refresh list"]]){b.type="button";b.textContent=t;}
  link.href="vault.html";link.textContent="Manage backups in ΦVault";link.style.color="#dfaa80";
  section.append(h,name,save,select,restore,refresh,status,link);document.querySelector("main").append(section);

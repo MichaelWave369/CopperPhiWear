@@ -1,7 +1,6 @@
 import {validateVault,MAX_CHARS} from "./vault.mjs";
-import {fabricationPlan} from "./fabrication.mjs";
+import {fabricationPlan,hybridReference} from "./fabrication.mjs";
 import {summarizeLab} from "./laboratory.mjs";
-import {importProject} from "./hybrid.mjs";
 const text=(v,k,max)=>{if(typeof v!=="string"||!v.trim()||v.length>max)throw new RangeError(k);return v.trim();};
 export const relationKinds=Object.freeze(["design-context","measurement-context"]);
 const bounded=v=>{const s=JSON.stringify(v);if(typeof s!=="string"||s.length>MAX_CHARS)throw new RangeError("project size limit");};
@@ -34,7 +33,7 @@ export function analyzeBridge(input){
  const p=validateBridge(input);
  return {format:"copperphiwear-project-report",version:1,name:p.name,paper:p.paper,records:p.records.map(r=>{
   if(r.kind==="garment"){const f=fabricationPlan(r.data,p.paper);return {id:r.id,kind:r.kind,name:r.name,derived:{inventory:f.inventory,no_fit:f.no_fit,references:f.references}};}
-  if(r.kind==="hybrid")return {id:r.id,kind:r.kind,name:r.name,derived:importProject(r.data).metrics};
+  if(r.kind==="hybrid"){const f=hybridReference(r.data,p.paper);return {id:r.id,kind:r.kind,name:r.name,derived:{...f.geometry,fabrication:{printable:f.printable,reason:f.reason,paper:f.paper,inventory:f.inventory}}};}
   const l=summarizeLab(r.data);return {id:r.id,kind:r.kind,name:r.name,derived:{registered_samples:l.sample_count,recorded_readings:l.reading_count,groups:l.groups}};
- }),links:p.links,warnings:["Links are user-declared context, not provenance proof, fabrication confirmation or matched experimental evidence.","Derived reports recompute from captured source snapshots; no cross-record aggregation or deduplication of physical specimens.","Hybrid compositions are not yet garment or fabrication inputs.","Registered samples may be planned; readings are user-entered and not independently verified.","No medical, shielding or wearable validation."]};
+ }),links:p.links,warnings:["Links are user-declared context, not provenance proof, fabrication confirmation or matched experimental evidence.","Derived reports recompute from captured source snapshots; no cross-record aggregation or deduplication of physical specimens.","Hybrid references are supported; hybrid compositions are not yet garment panel inputs.","Registered samples may be planned; readings are user-entered and not independently verified.","No medical, shielding or wearable validation."]};
 }

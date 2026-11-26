@@ -1,5 +1,5 @@
 import {names} from "./geometry.mjs";
-import {swatchSheet,checkCalibration,fabricationPlan,inventoryCsv} from "./fabrication.mjs";
+import {swatchSheet,checkCalibration,fabricationPlan,inventoryCsv,hybridReference,hybridSheet} from "./fabrication.mjs";
 const $=id=>document.getElementById(id);let sheet=null,project=null,plan=null;
 for(const n of names){const o=document.createElement("option");o.value=n;o.textContent=n;$("pattern").append(o);}
 function save(name,body,type){const url=URL.createObjectURL(new Blob([body],{type}));const a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
@@ -18,3 +18,23 @@ $("json").addEventListener("click",()=>{if(plan)save("phi-fabrication-plan.json"
 
 import {mountVault} from "./vault-ui.mjs";
 mountVault({kind:"garment",load:value=>{project=value;build();}});
+
+import {importProject,exportProject} from "./hybrid.mjs";
+let hybrid=null,hybridPlan=null;
+function drawHybrid(){
+ hybridPlan=null;$("hybridPreview").replaceChildren();$("hybridInfo").textContent="";$("hybridSvg").disabled=true;$("hybridJson").disabled=true;
+ if(!hybrid){$("hybridStatus").textContent="Import a hybrid project or load a saved snapshot.";return;}
+ try{
+  hybridPlan=hybridReference(hybrid,$("paper").value,$("hybridQuantity").valueAsNumber);
+  $("hybridInfo").textContent=JSON.stringify({size_mm:hybridPlan.size_mm,quantity:hybridPlan.quantity,geometry:hybridPlan.geometry,inventory:hybridPlan.inventory,warnings:hybridPlan.warnings},null,2);
+  $("hybridJson").disabled=false;
+  if(hybridPlan.printable){$("hybridPreview").innerHTML=hybridSheet(hybrid,hybridPlan.paper).svg;$("hybridSvg").disabled=false;$("hybridStatus").textContent="Reference ready at original project size. Verify print calibration.";}
+  else $("hybridStatus").textContent=hybridPlan.reason;
+ }catch(e){hybridPlan=null;$("hybridStatus").textContent=e.message;}
+}
+function loadHybrid(value){const next=exportProject(importProject(value));hybrid=next;drawHybrid();}
+$("hybridFile").addEventListener("change",async()=>{try{const f=$("hybridFile").files[0];if(!f)return;if(f.size>2000000)throw new Error("Hybrid project too large");loadHybrid(JSON.parse(await f.text()));}catch(e){$("hybridStatus").textContent="Import rejected; existing composition retained: "+e.message;}finally{$("hybridFile").value="";}});
+$("hybridQuantity").addEventListener("input",drawHybrid);$("paper").addEventListener("input",drawHybrid);
+$("hybridSvg").addEventListener("click",()=>{if(hybridPlan?.printable)save("phi-hybrid-reference.svg",hybridSheet(hybrid,hybridPlan.paper).svg,"image/svg+xml");});
+$("hybridJson").addEventListener("click",()=>{if(hybridPlan)save("phi-hybrid-fabrication.json",JSON.stringify(hybridPlan,null,2),"application/json");});
+mountVault({kind:"hybrid",load:loadHybrid});drawHybrid();

@@ -43,3 +43,6 @@ Save named local snapshots in garment, hybrid and laboratory editors. Manage bac
 
 ## ΦBridge
 Capture vault snapshots into a portable research manifest with typed contextual links and derived reports. See `docs/bridge.md`. Links do not establish experimental provenance or medical evidence.
+
+## ΦHybrid fabrication
+Load saved hybrid compositions directly in ΦFabrication, retaining original scale and recursive transforms. Export a calibrated reference SVG and a versioned fabrication manifest; ΦBridge reports paper fit. See `docs/fabrication.md`.

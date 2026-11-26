@@ -1,14 +1,23 @@
 import {generate} from "./geometry.mjs";
 import {analyzeProject} from "./garment.mjs";
+import {importProject,exportProject} from "./hybrid.mjs";
 // Physical print references, not sewing patterns or electrical wiring instructions.
 export const PAPERS=Object.freeze({letter:Object.freeze([215.9,279.4]),a4:Object.freeze([210,297])});
 const round=x=>Math.round(x*1000)/1000;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&apos;"}[c]));
-export function swatchSheet(pattern,sizeMm,paper="letter"){
+export function fitsSheet(size,paper="letter"){
  if(!Object.hasOwn(PAPERS,paper))throw new RangeError("unsupported paper");
- const [w,h]=PAPERS[paper],margin=12,top=29,bottom=43;
- const model=generate(pattern,{size:sizeMm}),s=model.metrics.parameters.size;
- if(s>w-2*margin||s>h-top-bottom)throw new RangeError("tile exceeds printable reference area; choose a smaller tile or larger supported sheet");
+ if(!Number.isFinite(size)||size<=0)throw new RangeError("tile size");
+ const [w,h]=PAPERS[paper];
+ return size<=w-24&&size<=h-72;
+}
+export function swatchSheet(pattern,sizeMm,paper="letter"){
+ const model=generate(pattern,{size:sizeMm});
+ return renderSheet(pattern,model,model.metrics.parameters.size,paper);
+}
+function renderSheet(pattern,model,s,paper){
+ if(!fitsSheet(s,paper))throw new RangeError("tile exceeds printable reference area; choose a smaller tile or larger supported sheet");
+ const [w,h]=PAPERS[paper],top=29;
  const x=(w-s)/2,y=top;
  const paths=model.paths.map(line=>'<polyline fill="none" stroke="#8a4926" stroke-width="0.35" points="'+line.map(([a,b])=>round(x+a*s/100)+','+round(y+b*s/100)).join(' ')+'"/>').join("");
  const cy=h-28;
@@ -47,4 +56,19 @@ export function fabricationPlan(project,paper="letter"){
 export function inventoryCsv(plan){
  const rows=[["pattern","tile_mm","quantity","centerline_mm","printable","panels"],...plan.references.map(g=>[g.pattern,g.size_mm,g.quantity,g.centerline_mm,g.printable,g.panels.join(";")])];
  return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\r\n")+"\r\n";
+}
+
+// Hybrid reference uses the compiled tree exactly; never substitute a default motif.
+export function hybridReference(project,paper="letter",quantity=1){
+ if(!Number.isInteger(quantity)||quantity<1||quantity>99)throw new RangeError("quantity 1–99");
+ const model=importProject(project),size=model.metrics.size_mm;
+ const printable=fitsSheet(size,paper);
+ return {version:1,kind:"hybrid-fabrication",project:exportProject(model),paper,quantity,size_mm:size,printable,
+ reason:printable?null:"tile exceeds printable reference area; resize explicitly in ΦHybrid",
+ geometry:model.metrics,inventory:{planned_centerline_mm:round(model.metrics.centerline_length_mm*quantity),actual_yarn_mass_g:null,substrate_quantity:null},
+ warnings:["Detached swatch concept; no sewing or electrical connection instructions.","Length counts overlapping paths; actual yarn and finishing allowances are not measured.","Print actual size and verify both calibration bars; no physical validation."]};
+}
+export function hybridSheet(project,paper="letter"){
+ const model=importProject(project);
+ return renderSheet("Hybrid composition",model,model.metrics.size_mm,paper);
 }
