@@ -1,0 +1,12 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {estimateMaterial,panelPlan,endpointGraph,equivalentResistance} from "../workbench/textile.mjs";
+import {names,generate} from "../workbench/geometry.mjs";
+const line=[[0,0],[100,0]],cross=[[50,0],[50,100]];
+const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,String(a)+" != "+b);
+test("material uses supplied linear properties",()=>{const m=estimateMaterial(2000,{linearMassGPerM:2,linearResistanceOhmPerM:3,copperMassFraction:.25});close(m.yarn_mass_g,4);close(m.copper_mass_g,1);close(m.straight_reference_ohm,6);close(m.procurement_length_m,2.2);});
+test("rectangular packing and no fit",()=>{const p=panelPlan({widthMm:300,heightMm:400,tileMm:100,tileLengthMm:200,quantity:2});assert.equal(p.tiles,12);assert.equal(p.total_centerline_mm,2400);assert.equal(panelPlan({widthMm:20,heightMm:20,tileMm:100,tileLengthMm:200}).tiles,0);});
+test("crossings and coincident ends are not bonds",()=>{const g=endpointGraph([line,cross,line]);assert.equal(g.components,3);assert.equal(equivalentResistance(g,0,3),null);close(equivalentResistance(g,0,1),.1);});
+test("explicit series, parallel and ideal short",()=>{let g=endpointGraph([line,line],[[1,2]],100,10);close(equivalentResistance(g,0,3),2);assert.equal(g.components,1);g=endpointGraph([line,line],[[0,2],[1,3]],100,10);close(equivalentResistance(g,0,1),.5);assert.equal(g.cycle_rank,1);close(equivalentResistance(g,0,2),0);});
+test("all motifs make isolated graphs",()=>{for(const n of names){const m=generate(n);const g=endpointGraph(m.paths);assert.equal(g.components,m.paths.length);assert.equal(g.cycle_rank,0);}});
+test("reject invalid values",()=>{assert.throws(()=>estimateMaterial(1,{}));assert.throws(()=>panelPlan({widthMm:NaN}));assert.throws(()=>endpointGraph([line],[[0,99]]));assert.throws(()=>endpointGraph([[[0,0],[0,0]]]));assert.throws(()=>equivalentResistance(endpointGraph([line]),-1,0));});
