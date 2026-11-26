@@ -1,0 +1,65 @@
+[
+  {
+    "id": "tri-braid",
+    "number": 1,
+    "status": "concept",
+    "crossings": "unspecified",
+    "units": "mm"
+  },
+  {
+    "id": "hex-braid",
+    "number": 2,
+    "status": "concept",
+    "crossings": "unspecified",
+    "units": "mm"
+  },
+  {
+    "id": "golden-branch",
+    "number": 3,
+    "status": "concept",
+    "crossings": "unspecified",
+    "units": "mm"
+  },
+  {
+    "id": "mycelium",
+    "number": 4,
+    "status": "concept",
+    "crossings": "unspecified",
+    "units": "mm"
+  },
+  {
+    "id": "pocket-mesh",
+    "number": 5,
+    "status": "concept",
+    "crossings": "unspecified",
+    "units": "mm"
+  },
+  {
+    "id": "hex-mesh",
+    "number": 6,
+    "status": "concept",
+    "crossings": "unspecified",
+    "units": "mm"
+  },
+  {
+    "id": "spiral",
+    "number": 7,
+    "status": "concept",
+    "crossings": "unspecified",
+    "units": "mm"
+  },
+  {
+    "id": "fractal-braid",
+    "number": 8,
+    "status": "concept",
+    "crossings": "unspecified",
+    "units": "mm"
+  },
+  {
+    "id": "phi-hybrid",
+    "number": 9,
+    "status": "concept",
+    "crossings": "unspecified",
+    "units": "mm"
+  }
+]
