@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ΦWeave | CopperPhiWear</title><link rel="stylesheet" href="style.css"></head>
+<body><main><header><p class="eyebrow">COPPERPHIWEAR / ΦCW / 0.2</p><h1>ΦWeave Workbench</h1><p>Parametric conductive textile concepts. Design offline; measure off-body.</p></header>
+<section class="layout"><form id="controls"><h2>Geometry</h2><label for="pattern">Pattern family</label><select id="pattern"></select><div id="params"></div><button type="button" id="reset">Reset parameters</button></form>
+<section><h2>Concept swatch</h2><div id="preview" role="img" aria-label="Generated pattern preview"></div><div class="metrics"><div><small>Centerline length</small><strong id="length"></strong></div><div><small>Path count</small><strong id="count"></strong></div></div><p id="note"></p><div class="actions"><button id="svg" type="button">Export SVG</button><button id="json" type="button">Export JSON</button></div></section></section>
+<aside><h2>Evidence boundary</h2><p>These are centerlines, not weaving instructions or an electrical netlist. Crossings are unspecified; length includes overlapping paths and excludes seam allowance. No shielding, resistance or health outcome is predicted. Keep conductive samples off-body during testing. Never power or ground a garment, and never use it as PPE.</p></aside>
+</main><script type="module" src="app.mjs"></script></body></html>

@@ -15,3 +15,8 @@ jobs:
           python-version: '3.12'
       - run: python -m unittest discover -s tests -v
       - run: python tools/patterns.py --pattern all --size-mm 100 --out output
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/workbench.test.mjs
+      - run: node --check workbench/app.mjs
