@@ -1,0 +1,9 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {createStudy,studyReference,studyCsv,pilotDesigns} from "../workbench/wear.mjs";
+import {validateLab,summarizeLab} from "../workbench/laboratory.mjs";
+const input={lot:"documented yarn A",substrate:"cotton lot A"};
+test("pilot has nine planned specimens and no measurements",()=>{const s=createStudy(input);assert.equal(s.specimens.length,9);assert.equal(s.references.length,1);assert.deepEqual(new Set(s.specimens.map(x=>x.design)),new Set(pilotDesigns));assert.equal(new Set(s.measurement_order).size,9);assert.equal(s.lab_seed.readings.length,0);assert.deepEqual(validateLab(s.lab_seed),s.lab_seed);assert.equal(summarizeLab(s.lab_seed).reading_count,0);});
+test("full study has 33 independent IDs and nine printable references",()=>{const s=createStudy({...input,scope:"full",paper:"a4"});assert.equal(s.specimens.length,33);assert.equal(s.references.length,9);assert.equal(new Set(s.specimens.map(x=>x.id)).size,33);assert.deepEqual(new Set(s.measurement_order),new Set(s.specimens.map(x=>x.id)));for(const r of s.references)assert.match(studyReference(s,r.design),/^<svg /);assert.throws(()=>studyReference(s,"plain-control"));});
+test("deterministic seed and actual material not inferred",()=>{const s=createStudy(input);assert.deepEqual(s,createStudy(input));assert.notDeepEqual(s.measurement_order,createStudy({...input,seed:370}).measurement_order);assert.ok(s.specimens.every(x=>x.actual_length_mm===null&&x.actual_mass_g===null));assert.ok(s.lab_seed.samples.filter(x=>x.design!=="plain-control").every(x=>x.conductorLengthMm===null&&x.conductorMassG===null));assert.equal(studyCsv(s).trim().split("\r\n").length,10);});
+test("invalid or undocumented inputs rejected",()=>{for(const p of [{lot:""},{substrate:null},{size:181},{seed:-1},{replicates:2},{paper:"bad"},{scope:"bad"}])assert.throws(()=>createStudy({...input,...p}));});
