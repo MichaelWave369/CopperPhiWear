@@ -21,7 +21,7 @@ jobs:
       - run: node --test tests/*.test.mjs
       - run: for f in workbench/*-app.mjs workbench/app.mjs; do node --check "$f" || exit 1; done
   browser:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
