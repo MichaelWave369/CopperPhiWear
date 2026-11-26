@@ -20,3 +20,14 @@ jobs:
           node-version: '22'
       - run: node --test tests/*.test.mjs
       - run: for f in workbench/*-app.mjs workbench/app.mjs; do node --check "$f" || exit 1; done
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/browser/requirements.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: python tests/browser/test_workbench.py

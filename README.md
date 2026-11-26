@@ -52,3 +52,6 @@ Inspect detached swatch topology with explicit coincident endpoint bonds and ide
 
 ## ΦEvidence
 Compare explicitly paired detached swatches with documented matching criteria, retained exclusions and descriptive contrasts. See `docs/evidence.md`. No causal or health inference.
+
+## ΦVerify
+Browser integration checks run in a separate Chromium CI job. See `docs/verify.md` for the test coverage, local commands and remaining validation limits. No completed physical prototype or health evidence is claimed.
