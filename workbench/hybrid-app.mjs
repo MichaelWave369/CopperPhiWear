@@ -11,3 +11,6 @@ function save(name,data,mime){const url=URL.createObjectURL(new Blob([data],{typ
 $("svg").addEventListener("click",()=>{if(model)save("phi-hybrid.svg",hybridSvg(model),"image/svg+xml");});
 $("json").addEventListener("click",()=>{if(model)save("phi-hybrid.json",JSON.stringify(exportProject(model),null,2),"application/json");});
 $("import").addEventListener("change",async()=>{try{const f=$("import").files[0];if(!f)return;if(f.size>500000)throw new RangeError("project too large");const m=importProject(JSON.parse(await f.text()));$("tree").value=JSON.stringify(m.tree,null,2);$("size").value=m.metrics.size_mm;$("resolution").value=m.metrics.grid_resolution;show(m);}catch(e){$("status").textContent="Import rejected: "+e.message;}finally{$("import").value="";}});load();
+
+import {mountVault} from "./vault-ui.mjs";
+mountVault({kind:"hybrid",read:()=>{if(!model)throw new Error("Compile the composition first");return exportProject(model);},load:value=>{const m=importProject(value);$("tree").value=JSON.stringify(m.tree,null,2);$("size").value=m.metrics.size_mm;$("resolution").value=m.metrics.grid_resolution;show(m);}});

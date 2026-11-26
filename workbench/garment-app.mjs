@@ -36,3 +36,6 @@ $("report").addEventListener("click",()=>{if(report)download("phi-garment-invent
 $("save").addEventListener("click",()=>{try{download("phi-garment-project.json",validateProject(project));}catch(e){$("status").textContent="Check inputs: "+e.message;}});
 $("load").addEventListener("change",async()=>{try{const f=$("load").files[0];if(!f)return;if(f.size>100000)throw new Error("Project file too large");project=validateProject(JSON.parse(await f.text()));render();invalidate();}catch(e){$("status").textContent="Import rejected: "+e.message;}finally{$("load").value="";}});
 $("reset").addEventListener("click",()=>{project=blankProject();render();invalidate();});render();
+
+import {mountVault} from "./vault-ui.mjs";
+mountVault({kind:"garment",read:()=>validateProject(project),load:value=>{project=validateProject(value);render();invalidate();}});

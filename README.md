@@ -37,3 +37,6 @@ A local, inspectable design-to-swatch workflow, with reproducible geometric mode
 
 ## V0.9 integrated research workbench
 From the repository root, start `python -m http.server 8000 --bind 127.0.0.1` and open http://127.0.0.1:8000/. The launcher links ΦWeave, ΦTextile, ΦGarment, ΦFabrication, ΦLaboratory, ΦOptimize, ΦHybrid and ΦWear. See `docs/wear.md` for the reproducible pilot and full study packages. V0.9 prepares detached specimens; no physical wearable has been fabricated or validated. Export local JSON files before closing; module handoffs are manual. Run `python -m unittest discover -s tests -v` and `node --test tests/*.test.mjs` for model validation.
+
+## V1.0 development: ΦVault
+Save named local snapshots in garment, hybrid and laboratory editors. Manage backups from the launcher; see `docs/vault.md`. No automatic saving, encryption or cloud synchronization. Browser storage is not a substitute for portable backups.

@@ -12,3 +12,6 @@ $("save").addEventListener("click",()=>save("phi-lab.json",JSON.stringify(lab,nu
 $("csv").addEventListener("click",()=>save("phi-readings.csv",readingsCsv(lab),"text/csv"));
 $("report").addEventListener("click",()=>save("phi-lab-summary.json",JSON.stringify(summarizeLab(lab),null,2),"application/json"));
 $("import").addEventListener("change",async()=>{try{const f=$("import").files[0];if(!f)return;if(f.size>12000000)throw new Error("File too large");const next=validateLab(JSON.parse(await f.text()));if(lab.samples.length&&!confirm("Replace current in-memory register? Export first if needed."))return;lab=next;render();$("status").textContent="Register imported.";}catch(err){$("status").textContent="Import rejected: "+err.message;}finally{$("import").value="";}});render();syncStatus();
+
+import {mountVault} from "./vault-ui.mjs";
+mountVault({kind:"laboratory",read:()=>lab,load:value=>{lab=validateLab(value);render();}});

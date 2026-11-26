@@ -15,3 +15,6 @@ $("calibrate").addEventListener("click",()=>{try{const r=checkCalibration($("hor
 $("project").addEventListener("change",async()=>{project=null;resetPlan();try{const f=$("project").files[0];if(!f)return;if(f.size>100000)throw new Error("Project too large");project=JSON.parse(await f.text());build();}catch(e){$("status").textContent=e.message;}finally{$("project").value="";}});
 $("csv").addEventListener("click",()=>{if(plan)save("phi-tile-inventory.csv",inventoryCsv(plan),"text/csv");});
 $("json").addEventListener("click",()=>{if(plan)save("phi-fabrication-plan.json",JSON.stringify(plan,null,2),"application/json");});draw();
+
+import {mountVault} from "./vault-ui.mjs";
+mountVault({kind:"garment",load:value=>{project=value;build();}});

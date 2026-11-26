@@ -14,3 +14,6 @@ $("study").addEventListener("submit",e=>{e.preventDefault();clear();try{
 $("json").addEventListener("click",()=>{if(study)save("phi-wear-study.json",JSON.stringify(study,null,2),"application/json");});
 $("csv").addEventListener("click",()=>{if(study)save("phi-wear-specimens.csv",studyCsv(study),"text/csv");});
 $("lab").addEventListener("click",()=>{if(study)save("phi-wear-lab-seed.json",JSON.stringify(study.lab_seed,null,2),"application/json");});
+
+import {mountVault} from "./vault-ui.mjs";
+mountVault({kind:"laboratory",read:()=>{if(!study)throw new Error("Generate a study first");return study.lab_seed;}});
