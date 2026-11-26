@@ -19,4 +19,4 @@ jobs:
         with:
           node-version: '22'
       - run: node --test tests/*.test.mjs
-      - run: node --check workbench/app.mjs && node --check workbench/textile-app.mjs && node --check workbench/garment-app.mjs && node --check workbench/fabrication-app.mjs
+      - run: node --check workbench/app.mjs && node --check workbench/textile-app.mjs && node --check workbench/garment-app.mjs && node --check workbench/fabrication-app.mjs && node --check workbench/laboratory-app.mjs
