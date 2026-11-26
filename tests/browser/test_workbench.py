@@ -77,7 +77,7 @@ class Workbench(unittest.TestCase):
     def test_launcher_and_all_modules(self):
         self.go("/")
         links = self.page.locator(".modules a").evaluate_all("(links) => links.map(a => a.getAttribute('href'))")
-        self.assertEqual(len(links), 12)
+        self.assertEqual(len(links), 13)
         for link in links:
             self.go("/" + link)
         self.go("/workbench/index.html")
@@ -172,6 +172,21 @@ class Workbench(unittest.TestCase):
         evidence = json.loads(self.download("#export"))
         self.assertEqual(evidence["summary"]["eligible_pairs"], 0)
         self.assertIsNone(evidence["summary"]["contrast_pp"]["median"])
+
+    def test_material_review_roundtrip(self):
+        self.go("/workbench/material.html")
+        expect(self.page.locator("#status")).to_have_text("incomplete")
+        original = json.loads(self.download("#export"))
+        self.assertIsNone(original["quantities"]["copperMassFraction"]["value"])
+        self.page.locator("#record").fill("{bad")
+        self.page.locator("#evaluate").click()
+        expect(self.page.locator("#export")).to_be_disabled()
+        self.upload("#import", original)
+        expect(self.page.locator("#status")).to_have_text("incomplete")
+        self.assertEqual(json.loads(self.download("#export")), original)
+        report = json.loads(self.download("#report"))
+        self.assertFalse(report["authorized_for_wear"])
+        self.assertFalse(report["authorized_for_experiment"])
 
     def test_junction_bond_and_export(self):
         self.go("/workbench/junction.html")

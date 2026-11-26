@@ -5,6 +5,8 @@ Status: PLANNED / NO PHYSICAL DATA. This is an engineering process check, not a 
 ## 1. Document materials before purchase or construction
 Record actual supplier, product, composition, yarn diameter, specified linear resistance, care and handling instructions, substrate lot, garment suitability and available safety information. Do not assume solid wire, bare strands or metal-coated yarn are equivalent. Begin with nonconductive practice thread. Reject loose, sharp, damaged or unsuitable material. Use a suitable low-energy resistance meter and detached test fixture; follow instrument instructions.
 
+Use ΦMaterial (`docs/material.md`) to preserve supplier/measured values and unknowns, inspection notes and calibration records. A documentation-ready report requires independent review; it never authorizes fabrication or wear.
+
 ## 2. Plan specimens
 In ΦWear select pilot, three replicates per design, nominal 100 mm square and seed 369. Enter the actual lots, not placeholders. Export the study manifest, order CSV, seed register and TriBraid reference. Print actual size and verify both 50 mm and 20 mm calibration bars in ΦFabrication. If calibration fails, reprint; do not rescale the recorded design.
 The pilot includes 3 plain controls (CW-01-01 through CW-01-03), 3 straight references (CW-02-01 through CW-02-03), and 3 TriBraid specimens (CW-03-01 through CW-03-03). Each must be separately fabricated. These are planned IDs, not evidence. Plain fabric and straight reference are hand-drawn according to docs/wear.md. Straight controls are not automatically mass- or length-matched to braids.

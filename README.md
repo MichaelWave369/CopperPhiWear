@@ -1,6 +1,6 @@
 # CopperPhiWear (ΦCW)
 
-**Current software candidate: 1.0.0-rc.1.** See [release acceptance](docs/release.md), [changelog](CHANGELOG.md), and [detached pilot runbook](docs/pilot-runbook.md). No physical prototype or medical evidence.
+**Current software candidate: 1.0.0-rc.2.** See [release acceptance](docs/release.md), [changelog](CHANGELOG.md), and [detached pilot runbook](docs/pilot-runbook.md). No physical prototype or medical evidence.
 
 An open research project exploring passive conductive textile geometry, inspired by braided networks, Fibonacci branching, NBG pocket meshes and recursive Altermath motifs.
 
@@ -57,3 +57,6 @@ Compare explicitly paired detached swatches with documented matching criteria, r
 
 ## ΦVerify
 Browser integration checks run in a separate Chromium CI job. See `docs/verify.md` for the test coverage, local commands and remaining validation limits. No completed physical prototype or health evidence is claimed.
+
+## ΦMaterial
+Document actual material lots, quantity provenance, inspection and print calibration before independent detached-pilot review. See `docs/material.md`. No automatic safety approval.

@@ -1,4 +1,4 @@
-# CopperPhiWear 1.0.0-rc.1 — release acceptance
+# CopperPhiWear 1.0.0-rc.2 — release acceptance
 
 ## Scope
 Local-first research software for passive conductive textile concepts and detached experimental swatches. The release candidate is a source-tree version marker, not a GitHub Release/tag or a certification. No license has been selected; publication of source alone does not grant an open-source license.
@@ -12,7 +12,8 @@ Open http://127.0.0.1:8000/. Keep the server bound to loopback. Runtime needs a 
 - [x] Previous exact baseline: `969a9824d3354ffb4d3ccae8f7910376bce113be`, [CI 45773673566](https://github.com/MichaelWave369/CopperPhiWear/actions/runs/45773673566).
 - [x] Baseline Python model tests: 2 passed; Node tests: 60 passed; Chromium scenarios: 5 passed.
 - [x] Initial browser setup incompatibility diagnosed and corrected by pinning Ubuntu 24.04.
-- [ ] Verify CI at the candidate commit itself (both jobs required; do not infer success from the parent).
+- [x] RC.1 exact commit `78a67039f80e61b6013f88a538a6280f1175daa4` passed both jobs ([CI](https://github.com/MichaelWave369/CopperPhiWear/actions/runs/45774385666)).
+- [ ] Verify RC.2 CI at the candidate commit itself (both jobs required; do not infer success from the parent).
 - [ ] Owner selects license and confirms distribution terms before claiming an open-source release.
 - [ ] Owner approves final version/tag and release notes.
 - [ ] Physical print calibration, substrate and conductor inspection, detached swatch tests.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-rc.2
+- Add ΦMaterial documentation and readiness review; explicit unknowns, source references and inspection records, no automatic authorization.
+- RC.1 passed both jobs at `78a67039f80e61b6013f88a538a6280f1175daa4` ([CI 45774385666](https://github.com/MichaelWave369/CopperPhiWear/actions/runs/45774385666)). RC.2 requires its own validation.
+
 ## 1.0.0-rc.1 — 2026-11-25 (US Pacific)
 First software release candidate; not a physical wearable release.
 
