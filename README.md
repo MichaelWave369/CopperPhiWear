@@ -1,5 +1,7 @@
 # CopperPhiWear (ΦCW)
 
+**Current software candidate: 1.0.0-rc.1.** See [release acceptance](docs/release.md), [changelog](CHANGELOG.md), and [detached pilot runbook](docs/pilot-runbook.md). No physical prototype or medical evidence.
+
 An open research project exploring passive conductive textile geometry, inspired by braided networks, Fibonacci branching, NBG pocket meshes and recursive Altermath motifs.
 
 **Research prototype, not a medical device, electrical PPE, or validated RF shield.** No geometry is presumed to improve health. The initial objective is measurable textile engineering, not treatment or electromagnetic therapy.

@@ -4,10 +4,10 @@ Start the local server from the repo root: python -m http.server 8000 --bind 127
 The straight reference is a line centered across 80% of tile width; plain control has no conductor. Draw these manually with a ruler on the same substrate. Neither is a length-matched comparator for complex designs. Record actual lengths/masses and mismatches, and consider a separate matched experiment before drawing causal conclusions. The default seed 369 creates a deterministic pseudo-random measurement order, not cryptographic randomization or blinding. Verify print calibration. Use nonconductive practice material first and detached samples only. Follow docs/protocol.md, record actual method and instrument uncertainty, retain all failures. Do not measure a worn garment. No medical data or efficacy claim.
 
 ## Acceptance gates
-- Software: automated model tests and module link checks; real browser/printing still require manual verification.
+- Software: automated model and Chromium integration checks; physical printing and cross-browser coverage remain pending.
 - Material: documented composition, care and garment suitability; no loose or sharp conductors.
 - Fabrication: independently fabricated swatches, measured dimensions and calibration, documented connections.
 - Measurement: baseline, defined flex/abrasion methods, preserved raw readings and all failures.
 - Review: evaluate results and limitations independently; a wearable is a separate decision requiring fit and material safety review. No completed physical prototype is claimed.
 
-Hybrid SVGs can be exported independently but are not accepted as study or garment inputs yet. No licensing decision has been made.
+Hybrid compositions have calibrated fabrication references but are not accepted as study or garment inputs yet. No licensing decision has been made.
