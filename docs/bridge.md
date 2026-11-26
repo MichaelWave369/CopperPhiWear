@@ -1,0 +1,6 @@
+# ΦBridge — V1.0 integration increment
+Open http://127.0.0.1:8000/workbench/bridge.html from the local server or launcher. Capture validated named snapshots from ΦVault into a portable version-1 manifest. Captures are independent copies, so vault edits or deletes do not invalidate an exported project. Export the manifest before closing; the editor is in memory. Import replaces only the editor after validation and confirmation, never the vault.
+
+Typed context links: hybrid → garment (design-context), garment or hybrid → laboratory (measurement-context). A reason is required. Duplicate/dangling links are rejected. Remove links before removing referenced records. Links are descriptive assertions, not verified lineage or proof of fabrication. Reports recompute garment fabrication inventory, hybrid metrics and descriptive lab summaries from captured records; no totals across lab records (which may overlap). A registered sample may be merely planned. No automatic matching or attribution of readings. No physical or health claims.
+
+The manifest uses existing validated module payloads and vault limits (100 records, two million serialized characters), up to 300 contextual links. This is not yet a replacement for individual module schemas or an automatic synchronization engine. Hybrid fabrication is a separate next increment. Browser testing remains pending.

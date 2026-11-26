@@ -40,3 +40,6 @@ From the repository root, start `python -m http.server 8000 --bind 127.0.0.1` an
 
 ## V1.0 development: ΦVault
 Save named local snapshots in garment, hybrid and laboratory editors. Manage backups from the launcher; see `docs/vault.md`. No automatic saving, encryption or cloud synchronization. Browser storage is not a substitute for portable backups.
+
+## ΦBridge
+Capture vault snapshots into a portable research manifest with typed contextual links and derived reports. See `docs/bridge.md`. Links do not establish experimental provenance or medical evidence.
