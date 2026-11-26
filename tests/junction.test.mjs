@@ -1,0 +1,10 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {createJunction,validateJunction,addBond,removeBond,analyzeJunction,sourceModel} from "../workbench/junction.mjs";
+import {compile,preset,exportProject} from "../workbench/hybrid.mjs";
+const fresh=()=>createJunction({kind:"pattern",pattern:"golden-branch",parameters:{size:100,depth:1}});
+test("crossings and coincident endpoints remain isolated by default",()=>{const p=fresh(),r=analyzeJunction(p);assert.equal(r.metrics.paths,3);assert.equal(r.metrics.components,3);assert.equal(r.metrics.connected,true);assert.equal(r.metrics.ideal_resistance_ohm,null);const q=analyzeJunction({...p,terminals:[0,3]});assert.equal(q.metrics.connected,false);});
+test("explicit coincident bonds merge components; removal reverses them",()=>{const p=fresh(),q=addBond(p,1,2),r=analyzeJunction({...q,terminals:[0,3],ohmPerM:10});assert.equal(r.metrics.components,2);assert.equal(r.metrics.connected,true);assert.ok(r.metrics.ideal_resistance_ohm>0);assert.deepEqual(removeBond(q,0),p);assert.throws(()=>addBond(q,2,1));assert.throws(()=>addBond(p,0,3));assert.throws(()=>addBond(p,1,1));});
+test("closed-looking square requires explicit endpoint bond",()=>{const p=createJunction({kind:"pattern",pattern:"pocket-mesh",parameters:{cells:1}});assert.equal(analyzeJunction(p).metrics.cycle_rank,0);const q=addBond(p,0,1),r=analyzeJunction({...q,ohmPerM:5});assert.equal(r.metrics.cycle_rank,1);assert.equal(r.metrics.ideal_resistance_ohm,0);});
+test("hybrid import and canonical roundtrip",()=>{const p=createJunction({kind:"hybrid",project:exportProject(compile(preset("braid-369")))});assert.equal(sourceModel(p.source).paths.length,18);assert.deepEqual(validateJunction(JSON.parse(JSON.stringify(p))),p);});
+test("invalid terminals and material rejected",()=>{const p=fresh();for(const x of [{terminals:[0,0]},{terminals:[0,99]},{ohmPerM:0},{ohmPerM:NaN},{bonds:[[1,99]]},{version:2}])assert.throws(()=>validateJunction({...p,...x}));});

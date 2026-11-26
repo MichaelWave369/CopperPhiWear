@@ -46,3 +46,6 @@ Capture vault snapshots into a portable research manifest with typed contextual 
 
 ## ΦHybrid fabrication
 Load saved hybrid compositions directly in ΦFabrication, retaining original scale and recursive transforms. Export a calibrated reference SVG and a versioned fabrication manifest; ΦBridge reports paper fit. See `docs/fabrication.md`.
+
+## ΦJunction
+Inspect detached swatch topology with explicit coincident endpoint bonds and ideal DC analysis. See `docs/junction.md`. No implicit electrical connections or on-body measurements.
